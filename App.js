@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import * as WebBrowser from 'expo-web-browser';
 import { StyleSheet, Text, View } from 'react-native';
 import * as Google from 'expo-auth-session/providers/google';
-import { Button } from 'react-native';
+import { Button } from "@react-native-material/core";
 import { Buffer } from "buffer";
 
 WebBrowser.maybeCompleteAuthSession();
@@ -39,14 +39,15 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text>HfSG App</Text>
+      <Text style={styles.appName}>HfSG App</Text>
       <Text>{user?.sub}</Text>
       <StatusBar style="auto" />
       <Button
-        disabled={!request}
-        title="Login"
-        onPress={() => {
-          promptAsync();}
+        title="Log in with Google"
+        onPress={
+          () => {
+            promptAsync();
+          }
         }
       />
     </View>
@@ -56,8 +57,13 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#50D283',
     alignItems: 'center',
     justifyContent: 'center',
   },
+  appName: {
+    fontSize: 32,
+    color: '#8450D2',
+    fontWeight: 'bold',
+  }
 });
