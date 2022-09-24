@@ -11,6 +11,9 @@
   "dependencies": {
     "@expo/webpack-config": "^0.17.0",
     "expo": "~46.0.9",
+    "expo-auth-session": "^3.7.1",
+    "expo-google-sign-in": "^11.0.0",
+    "expo-random": "^12.3.0",
     "expo-splash-screen": "~0.16.2",
     "expo-status-bar": "~1.4.0",
     "react": "18.0.0",

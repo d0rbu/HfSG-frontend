@@ -5,7 +5,13 @@
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "ios": {
+      "bundleIdentifier": "com.project.hfsg"
+    },
+    "android": {
+      "package": "com.project.hfsg"
+    }
   },
   "name": "HfSG-frontend"
 }
