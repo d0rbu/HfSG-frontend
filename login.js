@@ -51,6 +51,10 @@ export default function LoginScreen ({navigation}) {
           }
         }
       />
+      <Button
+        title="Go to Main Page"
+        onPress={() => navigation.navigate("Main")}
+        />
     </View>
   );
 }
