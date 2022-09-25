@@ -35,14 +35,16 @@ export default function LoginScreen ({navigation}) {
       const user = JSON.parse(jwt_parts[1]); // get user object after jwt decoded
 
       setUser(user);
+      navigation.navigate("Profile",{paramKey: JSON.stringify(user)})
     }
   }, [response]);
 
   return (
     <View style={styles.container}>
       <Text style={styles.appName}>HfSG App</Text>
-      <Text>{user?.sub}</Text>
+      
       <StatusBar style="auto" />
+
       <Button
         title="Log in with Google"
         onPress={
@@ -51,10 +53,6 @@ export default function LoginScreen ({navigation}) {
           }
         }
       />
-      <Button
-        title="Go to Main Page"
-        onPress={() => navigation.navigate("Main")}
-        />
     </View>
   );
 }
@@ -62,7 +60,7 @@ export default function LoginScreen ({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#50D283',
+    backgroundColor: '#bbebca',
     alignItems: 'center',
     justifyContent: 'center',
   },
