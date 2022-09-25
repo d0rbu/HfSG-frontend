@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import * as WebBrowser from 'expo-web-browser';
 import { Alert, Modal, StyleSheet, View, Image, TouchableOpacity, Pressable } from 'react-native';
 import * as Google from 'expo-auth-session/providers/google';
-import { Button } from "@react-native-material/core";
 import { Buffer } from "buffer";
 import * as ImagePicker from 'expo-image-picker'
 import { Box, HStack, VStack, Text, Button, Spacer } from "@react-native-material/core";
@@ -124,21 +123,19 @@ function getRedeemables(user, modalVisible, setModalVisible, points, setPoints) 
   })
 }
 export default function Main({ user }) {
+  const [points, setPoints] = useState(0)
+  const [redeemables, setRedeemables] = useState([])
+  const [modalVisible, setModalVisible] = useState(false)
+  
+  useEffect(() => {
+    setPoints(getPoints(user))
+  }, [])
+
+  useEffect(() => {
+    setRedeemables(getRedeemables(user, modalVisible, setModalVisible, points, setPoints))
+  }, [points])
 
   const openCameraGetPic = async () => {
-    const [points, setPoints] = useState(0)
-    const [redeemables, setRedeemables] = useState([])
-    const [modalVisible, setModalVisible] = useState(false)
-  
-    useEffect(() => {
-      setPoints(getPoints(user))
-    }, [])
-
-    useEffect(() => {
-      setRedeemables(getRedeemables(user, modalVisible, setModalVisible, points, setPoints))
-    }, [points])
-
-
     const camRequestPermission = await ImagePicker.requestCameraPermissionsAsync();
     const libRequestPermission = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
@@ -150,26 +147,15 @@ export default function Main({ user }) {
     const cameraResult = await ImagePicker.launchCameraAsync();
     if(!cameraResult.cancelled){
       alert("Congrats! Added points");
+      setPoints(points+1);
     }
   }
-/**
-      <Button
-        title="Verify Disposal"
-        onPress={ openCameraGetPic } 
-        style={styles.verifyButton}
-      />
-      */
-
   return (
     <View style={styles.container}>
       <VStack spacing={'3%'} style={styles.stack}>
         <Button
           title="Verify Disposal"
-          onPress={
-            () => {
-              setPoints(points + 1), openCameraGetPic
-            }
-          }
+          onPress={openCameraGetPic}
           style={styles.verifyButton}
         />
         <Spacer />
@@ -190,17 +176,6 @@ export default function Main({ user }) {
 
     </View>
   )
-}
-      
-
-
-
-
-export default function Main({ user }) {
-    return (
-    <View style={styles.container}>
-          </View>
-  );
 }
 
 const styles = StyleSheet.create({
