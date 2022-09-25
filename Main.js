@@ -4,6 +4,8 @@ import * as WebBrowser from 'expo-web-browser';
 import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import * as Google from 'expo-auth-session/providers/google';
 import { Box, HStack, VStack, Text, Button, Spacer } from "@react-native-material/core";
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 WebBrowser.maybeCompleteAuthSession();
 
