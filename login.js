@@ -1,9 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState, useEffect } from 'react';
 import * as WebBrowser from 'expo-web-browser';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View, Image } from 'react-native';
 import * as Google from 'expo-auth-session/providers/google';
-import { Button } from "@react-native-material/core";
+import { Text, Button, Box, FAB } from "@react-native-material/core";
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Buffer } from "buffer";
 import { NavigationContainer } from '@react-navigation/native';
 
@@ -17,8 +18,6 @@ export default function LoginScreen ({navigation}) {
     androidClientId: 'GOOGLE_GUID.apps.googleusercontent.com',
     webClientId: 'GOOGLE_GUID.apps.googleusercontent.com',
   }, );
-
-  const [user, setUser] = useState({});
 
   useEffect(() => {
     if (response?.type === 'success') {
@@ -34,24 +33,26 @@ export default function LoginScreen ({navigation}) {
         );
       const user = JSON.parse(jwt_parts[1]); // get user object after jwt decoded
 
-      setUser(user);
-      navigation.navigate("Profile",{paramKey: JSON.stringify(user)})
+      navigation.navigate("Profile", { user })
     }
   }, [response]);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.appName}>HfSG App</Text>
-      
+      <Image style={{ height: '22%', width: '20%', borderTopRightRadius: '10%', borderBottomRightRadius: '10%' }} source={{ uri: 'https://cdn.discordapp.com/attachments/1023077405281239173/1023675492131410070/dog.png' }} />
+      <Text variant="h3" style={styles.appName}>Waste Erased</Text>
       <StatusBar style="auto" />
-
-      <Button
-        title="Log in with Google"
+      <Box style={{ height: '10%' }} />
+      <FAB
+        variant="extended"
+        label="Log in with Google"
         onPress={
           () => {
             promptAsync();
           }
         }
+        icon={(() => <Icon name="login" size={24} color="white" />)}
+        color="#007520"
       />
     </View>
   );
@@ -62,11 +63,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#bbebca',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'start',
+    paddingTop: '25%',
   },
   appName: {
-    fontSize: 32,
-    color: '#8450D2',
+    color: '#008069',
     fontWeight: 'bold',
   }
 });

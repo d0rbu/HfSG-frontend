@@ -10,7 +10,7 @@ import Main from './Main';
 import * as React from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import LoginScreen from "./login.js";
+import LoginScreen from "./Login.js";
 import Profile from './Profile';
 
 const Stack = createNativeStackNavigator();
@@ -24,10 +24,11 @@ export default function App() {
           component={LoginScreen}
           key={'login'}
           options={{
-            headerMode: 'float',
-            headerTintColor: 'white',
+            headerMode: 'screen',
+            headerTintColor: 'black',
+            headerTitle: '',
             headerStyle: {
-              backgroundColor: '#00ac46',
+              backgroundColor: '#bbebca',
             },
           }} 
         />
@@ -36,7 +37,7 @@ export default function App() {
           component={Main}
           key={'main'}
           options={{
-            headerMode: 'float',
+            headerMode: 'screen',
             headerTintColor: 'black',
             headerStyle: {
               backgroundColor: '#50D283',
@@ -48,7 +49,7 @@ export default function App() {
           component={Profile}
           key={'profile'}
           options={{
-            headerMode: 'float',
+            headerMode: 'screen',
             headerTintColor: 'black',
             headerStyle: {
               backgroundColor: '#50D283',
