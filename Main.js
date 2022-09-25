@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState, useEffect } from 'react';
 import * as WebBrowser from 'expo-web-browser';
-import { Alert, Modal, StyleSheet, View, Image, TouchableOpacity, Pressable } from 'react-native';
+import { Alert, Modal, StyleSheet, View, Image, TouchableOpacity, Pressable, ScrollView } from 'react-native';
 import * as Google from 'expo-auth-session/providers/google';
 import { Box, HStack, VStack, Text, Button, Spacer } from "@react-native-material/core";
 import { NavigationContainer } from '@react-navigation/native';
@@ -15,12 +15,20 @@ function getPoints(user) {
 
 let redeemables = [
   {
-    price: 10,
-    uses: 2,
+    price: 2,
+    uses: 10,
     title: 'Austin Raffle',
-    description: 'As a reward for helping clean up after yourself, the city of Austin is hosting a raffle for an iPhone 14! Redeem 10 points per entry!',
+    description: 'As a reward for helping clean up after yourself, the city of Austin is hosting a raffle for an iPhone 14! Redeem 2 points per entry!',
     image: 'https://assets.simpleviewinc.com/simpleview/image/upload/c_fill,g_xy_center,h_202,q_75,w_389,x_1635,y_1743/v1/clients/austin/Austin_Skyline_Credit_Christopher_Sherman_lifetime__4f60343d-9f69-450c-8ad3-fa636761786d.jpg',
     id: 0,
+  },
+  {
+    price: 10,
+    uses: 1,
+    title: 'Community BBQ',
+    description: 'Free food at the community barbeque if you redeem 10 points!',
+    image: 'https://images.lifestyleasia.com/wp-content/uploads/sites/7/2022/05/13105548/barbeque-Delhi.jpg',
+    id: 1,
   }
 ]
 
@@ -31,21 +39,22 @@ redeemables = redeemables.map((redeemable, index) => {
   }
 })
 
-function buyRedeemable(redeemable, points, setPoints) {
+function buyRedeemable(redeemable, points, setPoints, prizes, setPrizes) {
   if (points < redeemable.price) {
     Alert.alert(`Not enough points to redeem!`)
     return
   }
 
-  setPoints(points - redeemable.price)
   if (redeemable.uses > 1) {
     redeemable.uses -= 1
   } else {
     redeemables.splice(redeemable.index, 1)
   }
+  setPoints(points - redeemable.price)
+  setPrizes(prizes + 1)
 }
 
-function getRedeemables(user, modalVisible, setModalVisible, points, setPoints) {
+function getRedeemables(user, modalVisible, setModalVisible, points, setPoints, prizes, setPrizes) {
   return redeemables.map((redeemable) => {
     return (
       <>
@@ -65,7 +74,7 @@ function getRedeemables(user, modalVisible, setModalVisible, points, setPoints) 
               setModalVisible(!modalVisible);
             }}
           >
-            <Box m={4} style={styles.redeemable} key={redeemable.id}>
+            <Box m={4} style={styles.redeemable}>
               <HStack style={{ justifyContent: 'space-between', width: '100%' }}>
                 <Box style={{ width: '67%', height: '100%', textOverflow: 'ellipsis' }}>
                   <Text variant={'h6'} style={{ margin: '5%' }}>
@@ -93,7 +102,7 @@ function getRedeemables(user, modalVisible, setModalVisible, points, setPoints) 
                 {
                   text: `Redeem for ${redeemable.price} points`,
                   onPress: () => {
-                    buyRedeemable(redeemable, points, setPoints)
+                    buyRedeemable(redeemable, points, setPoints, prizes, setPrizes)
                   },
                   style: 'default',
                 },
@@ -121,8 +130,10 @@ function getRedeemables(user, modalVisible, setModalVisible, points, setPoints) 
 }
 
 
-export default function Main({ user }) {
-  const [points, setPoints] = useState(0)
+export default function Main({ user, route, navigation }) {
+  const { points, setPoints, totalPoints, setTotalPoints, prizes, setPrizes } = route.params
+  const [currentPoints, setCurrentPoints] = useState(points)
+  const [currentPrizes, setCurrentPrizes] = useState(prizes)
   const [redeemables, setRedeemables] = useState([])
   const [modalVisible, setModalVisible] = useState(false)
   
@@ -131,8 +142,21 @@ export default function Main({ user }) {
   }, [])
 
   useEffect(() => {
-    setRedeemables(getRedeemables(user, modalVisible, setModalVisible, points, setPoints))
-  }, [points])
+    const deltaPoints = currentPoints - points
+    setPoints(currentPoints)
+
+    if (deltaPoints > 0) {
+      setTotalPoints(totalPoints + deltaPoints)
+    }
+  }, [currentPoints])
+
+  useEffect(() => {
+    setPrizes(currentPrizes)
+  }, [currentPrizes])
+
+  useEffect(() => {
+    setRedeemables(getRedeemables(user, modalVisible, setModalVisible, currentPoints, setCurrentPoints, currentPrizes, setCurrentPrizes))
+  }, [currentPoints])
 
   return (
     <View style={styles.container}>
@@ -141,7 +165,7 @@ export default function Main({ user }) {
           title="Verify Disposal"
           onPress={
             () => {
-              setPoints(points + 1)
+              setCurrentPoints(currentPoints + 1)
             }
           }
           style={styles.verifyButton}
@@ -151,15 +175,17 @@ export default function Main({ user }) {
           Points
         </Text>
         <Text variant={'h3'} style={styles.points}>
-          {points}
+          {currentPoints}
         </Text>
-        <VStack m={8} spacing={'5%'} style={styles.redeemables}>
-          <Spacer />
-          <Text variant={'h4'} style={styles.redeem}>
-            Redeem
-          </Text>
-          {redeemables}
-        </VStack>
+        <ScrollView style={styles.scrollView}>
+          <VStack m={8} spacing={'5%'} style={styles.redeemables}>
+            <Spacer />
+            <Text variant={'h4'} style={styles.redeem}>
+              Redeem
+            </Text>
+            {redeemables}
+          </VStack>
+        </ScrollView>
       </VStack>
     </View>
   );
@@ -168,7 +194,7 @@ export default function Main({ user }) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#50D283',
-    paddingTop: '20%',
+    paddingTop: '10%',
     height: '100%',
   },
   stack: {
@@ -193,8 +219,8 @@ const styles = StyleSheet.create({
   },
   redeemables: {
     alignItems: 'center',
-    width: '82%',
-    backgroundColor: '#BBEBCA',
+    width: '100%',
+    margin: 0,
     paddingBottom: '5%',
   },
   verifyButton: {
@@ -202,5 +228,10 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: 'bold',
     width: '70%',
-  }
+  },
+  scrollView: {
+    width: '90%',
+    padding: 0,
+    backgroundColor: '#BBEBCA',
+  },
 });
