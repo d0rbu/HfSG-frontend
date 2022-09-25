@@ -15,7 +15,16 @@
     "android": {
       "package": "com.project.hfsg"
     },
-    "scheme": "myapp"
+    "scheme": "myapp",
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow $(PRODUCT_NAME) to access your photos",
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera"
+        }
+      ]
+    ]
   },
   "name": "HfSG-frontend"
 }

@@ -5,23 +5,35 @@ import { StyleSheet, Text, View } from 'react-native';
 import * as Google from 'expo-auth-session/providers/google';
 import { Button } from "@react-native-material/core";
 import { Buffer } from "buffer";
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import * as ImagePicker from 'expo-image-picker'
 
 WebBrowser.maybeCompleteAuthSession();
 
+
 export default function Main({ user }) {
+
+  const openCameraGetPic = async () => {
+    const camRequestPermission = await ImagePicker.requestCameraPermissionsAsync();
+    const libRequestPermission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if(!camRequestPermission.granted || !libRequestPermission.granted){
+      alert("Can't access camera or library");
+      return;
+    }
+
+    const cameraResult = await ImagePicker.launchCameraAsync();
+    if(!cameraResult.cancelled){
+      alert("Congrats! Added points");
+    }
+  }
   return (
     <View style={styles.container}>
       <Button
         title="Verify Disposal"
-        onPress={
-          () => {
-            alert('Hi!')
-          }
-        }
+        onPress={ openCameraGetPic } 
         style={styles.verifyButton}
       />
+      
     </View>
   );
 }
