@@ -17,9 +17,31 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return(
     <NavigationContainer>
-      <Stack.Navigator headerMode = "none" initialRouteName= "Login">
-        <Stack.Screen name="Login" component = {LoginScreen} />
-        <Stack.Screen name="Main" component = {Main} />
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+          key={'login'}
+          options={{
+            headerMode: 'float',
+            headerTintColor: 'white',
+            headerStyle: {
+              backgroundColor: '#00ac46',
+            },
+          }} 
+        />
+        <Stack.Screen
+          name="Main"
+          component={Main}
+          key={'main'}
+          options={{
+            headerMode: 'float',
+            headerTintColor: 'black',
+            headerStyle: {
+              backgroundColor: '#50D283',
+            },
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
