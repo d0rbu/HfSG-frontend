@@ -29,7 +29,15 @@ let redeemables = [
     description: 'Free food at the Pease Park community barbeque if you redeem 10 points!',
     image: 'https://images.lifestyleasia.com/wp-content/uploads/sites/7/2022/05/13105548/barbeque-Delhi.jpg',
     id: 1,
-  }
+  },
+  {
+    price: 10,
+    uses: -1,
+    title: '$2 off Burger',
+    description: 'Redeem 10 points to get $2 off any medium or larger sized burger at Burger Bar!',
+    image: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/shroomami-burger-3-1655147735.jpg',
+    id: 1,
+  },
 ]
 
 redeemables = redeemables.map((redeemable, index) => {
@@ -47,6 +55,8 @@ function buyRedeemable(redeemable, points, setPoints, prizes, setPrizes) {
 
   if (redeemable.uses > 1) {
     redeemable.uses -= 1
+  } else if (redeemables.uses < 0) {
+
   } else {
     redeemables.splice(redeemable.index, 1)
   }
@@ -93,7 +103,7 @@ function getRedeemables(user, modalVisible, setModalVisible, points, setPoints, 
           onPress={() => {;
             Alert.alert(
               redeemable.title,
-              `${redeemable.description}\n${redeemable.uses} use${(redeemable.uses > 1) ? 's' : ''} left.`,
+              `${redeemable.description}\n${(redeemable.uses < 0) ? 'Unlimited' : redeemable.uses} use${(redeemable.uses == 1) ? '' : 's'} left.`,
               [
                 {
                   text: 'Cancel',
@@ -233,5 +243,6 @@ const styles = StyleSheet.create({
     width: '90%',
     padding: 0,
     backgroundColor: '#BBEBCA',
+    maxHeight: '65%',
   },
 });
