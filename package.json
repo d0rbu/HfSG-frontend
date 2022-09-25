@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@expo/webpack-config": "^0.17.0",
+    "@react-native-firebase/app": "^15.6.0",
     "@react-native-material/core": "^1.3.7",
     "expo": "~46.0.9",
     "expo-auth-session": "^3.7.1",
