@@ -39,7 +39,7 @@ let redeemables = [
     title: '$2 off Burger',
     description: 'Redeem 10 points to get $2 off any medium or larger sized burger at Burger Bar!',
     image: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/shroomami-burger-3-1655147735.jpg',
-    id: 1,
+    id: 2,
   },
 ]
 
@@ -89,7 +89,7 @@ function getRedeemables(user, points, setPoints, prizes, setPrizes) {
               },
             ]);
         }}
-        key={`${redeemable.id}touchableopacity`}
+        key={`${redeemable.id}`}
       >
         <Box m={4} style={styles.redeemable}>
           <HStack style={{ justifyContent: 'space-between', width: '100%' }}>
@@ -147,7 +147,7 @@ export default function Main({ user, route, navigation }) {
     }
 
     const cameraResult = await ImagePicker.launchCameraAsync();
-    if(!cameraResult.cancelled){
+    if(!cameraResult.cancelled) {
       alert("Congrats! Added points");
       setCurrentPoints(currentPoints + 1)
     }
@@ -203,8 +203,8 @@ const styles = StyleSheet.create({
   redeemable: {
     alignItems: 'center',
     width: '88%',
-    marginTop: '5%',
-    marginBottom: '2%',
+    marginTop: '0%',
+    marginBottom: '0%',
     borderRadius: '10%',
     backgroundColor: '#E3F7EA',
   },
