@@ -5,6 +5,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import * as Google from 'expo-auth-session/providers/google';
 import { Button } from "@react-native-material/core";
 import { Buffer } from "buffer";
+import Main from './Main';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -37,21 +38,25 @@ export default function App() {
     }
   }, [response]);
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.appName}>HfSG App</Text>
-      <Text>{user?.sub}</Text>
-      <StatusBar style="auto" />
-      <Button
-        title="Log in with Google"
-        onPress={
-          () => {
-            promptAsync();
+  if (user == {}) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.appName}>HfSG App</Text>
+        <Text>{user?.sub}</Text>
+        <StatusBar style="auto" />
+        <Button
+          title="Log in with Google"
+          onPress={
+            () => {
+              promptAsync();
+            }
           }
-        }
-      />
-    </View>
-  );
+        />
+      </View>
+    );
+  } else {
+    return <Main user={user} />
+  }
 }
 
 const styles = StyleSheet.create({
