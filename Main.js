@@ -26,7 +26,7 @@ let redeemables = [
     price: 10,
     uses: 1,
     title: 'Community BBQ',
-    description: 'Free food at the community barbeque if you redeem 10 points!',
+    description: 'Free food at the Pease Park community barbeque if you redeem 10 points!',
     image: 'https://images.lifestyleasia.com/wp-content/uploads/sites/7/2022/05/13105548/barbeque-Delhi.jpg',
     id: 1,
   }
