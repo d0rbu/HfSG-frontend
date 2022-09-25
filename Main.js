@@ -64,77 +64,44 @@ function buyRedeemable(redeemable, points, setPoints, prizes, setPrizes) {
   setPrizes(prizes + 1)
 }
 
-function getRedeemables(user, modalVisible, setModalVisible, points, setPoints, prizes, setPrizes) {
+function getRedeemables(user, points, setPoints, prizes, setPrizes) {
   return redeemables.map((redeemable) => {
     return (
-      <>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-            setModalVisible(!modalVisible);
-          }}
-          key={`${redeemable.id}modal`}
-        >
-          <TouchableOpacity
-            onPress={() => {;
-              Alert.alert("Modal has been closed.");
-              setModalVisible(!modalVisible);
-            }}
-          >
-            <Box m={4} style={styles.redeemable}>
-              <HStack style={{ justifyContent: 'space-between', width: '100%' }}>
-                <Box style={{ width: '67%', height: '100%', textOverflow: 'ellipsis' }}>
-                  <Text variant={'h6'} style={{ margin: '5%' }}>
-                    {redeemable.title}
-                  </Text>
-                  <Text style={{ marginLeft: '5%', width: '90%', height: 50,  textOverflow: 'ellipsis' }}>
-                    {redeemable.description}
-                  </Text>
-                </Box>
-                <Image style={{ height: '100%', width: '33%', borderTopRightRadius: '10%', borderBottomRightRadius: '10%' }} source={{ uri: redeemable.image}} />
-              </HStack>
+      <TouchableOpacity
+        onPress={() => {;
+          Alert.alert(
+            redeemable.title,
+            `${redeemable.description}\n${(redeemable.uses < 0) ? 'Unlimited' : redeemable.uses} use${(redeemable.uses == 1) ? '' : 's'} left.`,
+            [
+              {
+                text: 'Cancel',
+                style: 'cancel',
+              },
+              {
+                text: `Redeem for ${redeemable.price} points`,
+                onPress: () => {
+                  buyRedeemable(redeemable, points, setPoints, prizes, setPrizes)
+                },
+                style: 'default',
+              },
+            ]);
+        }}
+        key={`${redeemable.id}touchableopacity`}
+      >
+        <Box m={4} style={styles.redeemable}>
+          <HStack style={{ justifyContent: 'space-between', width: '100%' }}>
+            <Box style={{ width: '67%', height: '100%', textOverflow: 'ellipsis' }}>
+              <Text variant={'h6'} style={{ margin: '5%' }}>
+                {redeemable.title}
+              </Text>
+              <Text style={{ marginLeft: '5%', width: '90%', height: 50,  textOverflow: 'ellipsis' }}>
+                {redeemable.description}
+              </Text>
             </Box>
-          </TouchableOpacity>
-        </Modal>
-        <TouchableOpacity
-          onPress={() => {;
-            Alert.alert(
-              redeemable.title,
-              `${redeemable.description}\n${(redeemable.uses < 0) ? 'Unlimited' : redeemable.uses} use${(redeemable.uses == 1) ? '' : 's'} left.`,
-              [
-                {
-                  text: 'Cancel',
-                  style: 'cancel',
-                },
-                {
-                  text: `Redeem for ${redeemable.price} points`,
-                  onPress: () => {
-                    buyRedeemable(redeemable, points, setPoints, prizes, setPrizes)
-                  },
-                  style: 'default',
-                },
-              ]);
-          }}
-          key={`${redeemable.id}touchableopacity`}
-        >
-          <Box m={4} style={styles.redeemable}>
-            <HStack style={{ justifyContent: 'space-between', width: '100%' }}>
-              <Box style={{ width: '67%', height: '100%', textOverflow: 'ellipsis' }}>
-                <Text variant={'h6'} style={{ margin: '5%' }}>
-                  {redeemable.title}
-                </Text>
-                <Text style={{ marginLeft: '5%', width: '90%', height: 50,  textOverflow: 'ellipsis' }}>
-                  {redeemable.description}
-                </Text>
-              </Box>
-              <Image style={{ height: '100%', width: '33%', borderTopRightRadius: '10%', borderBottomRightRadius: '10%' }} source={{ uri: redeemable.image}} />
-            </HStack>
-          </Box>
-        </TouchableOpacity>
-      </>
+            <Image style={{ height: '100%', width: '33%', borderTopRightRadius: '10%', borderBottomRightRadius: '10%' }} source={{ uri: redeemable.image}} />
+          </HStack>
+        </Box>
+      </TouchableOpacity>
     )
   })
 }
@@ -145,7 +112,6 @@ export default function Main({ user, route, navigation }) {
   const [currentPoints, setCurrentPoints] = useState(points)
   const [currentPrizes, setCurrentPrizes] = useState(prizes)
   const [redeemables, setRedeemables] = useState([])
-  const [modalVisible, setModalVisible] = useState(false)
   
   useEffect(() => {
     setPoints(getPoints(user))
@@ -165,7 +131,7 @@ export default function Main({ user, route, navigation }) {
   }, [currentPrizes])
 
   useEffect(() => {
-    setRedeemables(getRedeemables(user, modalVisible, setModalVisible, currentPoints, setCurrentPoints, currentPrizes, setCurrentPrizes))
+    setRedeemables(getRedeemables(user, currentPoints, setCurrentPoints, currentPrizes, setCurrentPrizes))
   }, [currentPoints])
 
   return (
