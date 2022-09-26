@@ -3,8 +3,8 @@
 
 <!-- PROJECT LOGO -->
 <div align="center">
-  <a href="https://github.com/d0-rb/HfSG-frontend/assets/dog.png">
-    <img src="images/logo.png" alt="Logo" width="80" height="120">
+  <a href="https://github.com/d0-rb/HfSG-frontend/">
+    <img src="assets/logo.png" alt="Logo" width="80" height="120">
   </a>
 </div>
 <br />
