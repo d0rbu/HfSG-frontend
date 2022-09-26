@@ -4,14 +4,14 @@
 <!-- PROJECT LOGO -->
 <div align="center">
   <a href="https://github.com/d0-rb/HfSG-frontend/">
-    <img src="assets/logo.png" alt="Logo" width="80" height="120">
+    <img src="./assets/dog.png" alt="Logo" width="100" height="140">
   </a>
 </div>
 <br />
  
-# Our app name
+# Dog Duty
 <!-- ABOUT THE PROJECT -->
-[OUR APP NAME] was made by Henry Castillo, Anh Tran, Sridhar Nandigam, and Christopher Bannon during the <a href = "https://robinhood.engineering/breaking-into-tech-robinhoods-hackathon-for-social-good-6da2291153f5" target="_blank"> Robinhood Hackathon for social good</a> (9/23-9/25 2022).
+Dog Duty was made by Henry Castillo, Anh Tran, Sridhar Nandigam, and Christopher Bannon during the <a href = "https://robinhood.engineering/breaking-into-tech-robinhoods-hackathon-for-social-good-6da2291153f5" target="_blank"> Robinhood Hackathon for social good</a> (9/23-9/25 2022).
 
 <p>
 Our team focused on environmental goodness during this event, where we narrowed our target focus to 'dog owners'. 
@@ -23,7 +23,7 @@ Therefore, we decided to create a digital app to complement this attempted physi
 to use the physical waste stations and dispose of their dog's waste properly.
 </p>
 <p>
-[OUR APP NAME] would partner with local non-profits, city parks and rec, and apartment complexes to provide prizes or raffles for users to work towards.
+Dog Duty would partner with local non-profits, city parks and rec, and apartment complexes to provide prizes or raffles for users to work towards.
 Users would recieve up to a certain amount of points a day for throwing away their dog's waste.
 </p>
 
